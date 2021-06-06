@@ -1,0 +1,24 @@
+﻿@using Nem
+
+<div style=@myStyle>
+
+
+    <select class="form-control selectpicker" @bind="Region">
+        <option value="@NemRegionId.NONE">--select--</option>
+        @foreach (var region in Regions())
+        {
+            <option value="@region.Id">@region.FullName</option>
+        }
+    </select>
+    <h1>@Region</h1>
+
+
+
+    @if (ValidRegion)
+    {
+    <div>
+        <h1>@kWhDollarString kWh</h1>
+        <h1>@MWhDollarString MWh</h1>
+    </div>
+    }
+</div>
