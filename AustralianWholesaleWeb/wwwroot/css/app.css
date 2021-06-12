@@ -28,6 +28,15 @@ a, .btn-link {
     outline: 1px solid red;
 }
 
+.center-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
 .validation-message {
     color: red;
 }
