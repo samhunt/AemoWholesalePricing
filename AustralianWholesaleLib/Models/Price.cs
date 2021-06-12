@@ -14,15 +14,15 @@ namespace AustralianWholesaleLib.Models
 
         public string Colour()
         {
-            if(kWh <= 0)
+            if(MWh <= 0)
             {
                 return _blue;
             }
-            if(kWh > 0 && kWh < 5)
+            if(MWh > 0 && MWh < 20)
             {
                 return _green;
             }
-            if (kWh > 5 && kWh < 30)
+            if (MWh >= 20 && MWh < 100)
             {
                 return _orange;
             }
