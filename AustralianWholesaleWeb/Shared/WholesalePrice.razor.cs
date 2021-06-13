@@ -14,6 +14,15 @@ namespace AustralianWholesaleWeb.Shared
         [Inject]
         protected AustralianWholesaleLib.API Lib { get; set; }
 
+        private WholesaleForecast _wholesaleForecast;
+        private bool ValidRegion => Region != NemRegionId.NONE;
+        private decimal kWhPrice;
+        private decimal MWhPrice;
+        private string kWhDollarString => $"{kWhPrice:c}";
+        private string MWhDollarString => $"{MWhPrice:c}";
+
+        private PriceState priceState = PriceState.OK;
+
         private NemRegionId RegionId = NemRegionId.VIC1;
         private NemRegionId Region
         {
@@ -25,14 +34,6 @@ namespace AustralianWholesaleWeb.Shared
                 _ = GetLatestPrices();
             }
         }
-
-        private bool ValidRegion => Region != NemRegionId.NONE;
-        private decimal kWhPrice;
-        private decimal MWhPrice;
-        private string kWhDollarString => $"{kWhPrice:c}";
-        private string MWhDollarString => $"{MWhPrice:c}";
-
-        private PriceState priceState = PriceState.OK;
 
         public WholesalePrice()
         {
@@ -46,14 +47,23 @@ namespace AustralianWholesaleWeb.Shared
 
         private async Task GetLatestPrices()
         {
+            if (_wholesaleForecast != null)
+            {
+                _wholesaleForecast.RemoveData();
+            }
+
             if (RegionId != NemRegionId.NONE)
             {
                 var prices = await Lib.CurrentPrice(RegionId);
-                kWhPrice = prices.kWh;
-                MWhPrice = prices.MWh;
+                kWhPrice = prices.kWhPrice;
+                MWhPrice = prices.MWhPrice;
                 priceState = prices.State();
             }
 
+            if (_wholesaleForecast != null)
+            {
+                await _wholesaleForecast.UpdateData();
+            }
             StateHasChanged();
         }
 

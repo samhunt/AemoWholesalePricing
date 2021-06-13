@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AustralianWholesaleLib.Models;
 using Nem;
@@ -32,9 +33,26 @@ namespace AustralianWholesaleLib
 
             return new Price
             {
-                kWh = result.kWhPrice,
-                MWh = result.MWhPrice,
+                kWhPrice = result.kWhPrice,
+                MWhPrice = result.MWhPrice,
                 DateTime = result.DateTime
+            };
+        }
+
+        public async Task<ForecastedPrices> ForecastPrices(NemRegionId region)
+        {
+            var result = await _nemService.ForecastedPricesAsync(region);
+
+            return new ForecastedPrices
+            {
+                Prices = result.Select(x => new Price
+                {
+                    DateTime = x.DateTime,
+                    DemandMWh = x.Demand,
+                    GenerationMWh = x.Generation,
+                    kWhPrice = x.kWhPrice,
+                    MWhPrice = x.MWhPrice
+                }).ToList()
             };
         }
     }

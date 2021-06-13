@@ -9,20 +9,24 @@ namespace AustralianWholesaleLib.Models
     public class Price
     {
         public DateTime DateTime { get; set; }
-        public decimal MWh { get; set; }
-        public decimal kWh { get; set; }
+        public decimal MWhPrice { get; set; }
+        public decimal kWhPrice { get; set; }
+
+        public decimal GenerationMWh { get; set; }
+
+        public decimal DemandMWh { get; set; }
 
         public PriceState State()
         {
-            if(MWh <= 0)
+            if(MWhPrice <= 0)
             {
                 return PriceState.Low;
             }
-            if(MWh > 0 && MWh < 20)
+            if(MWhPrice > 0 && MWhPrice < 20)
             {
                 return PriceState.OK;
             }
-            if (MWh >= 20 && MWh < 100)
+            if (MWhPrice >= 20 && MWhPrice < 100)
             {
                 return PriceState.High;
             }

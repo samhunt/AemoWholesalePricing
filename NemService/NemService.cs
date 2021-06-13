@@ -20,7 +20,9 @@ namespace Nem
             _http = new HttpClient();
         }
 
-        public DateTime AEMOTime()
+        public DateTime AEMOTime() => AEMO_TIME();
+
+        public static DateTime AEMO_TIME()
         {
             var timeZoneInfo = TZConvert.GetTimeZoneInfo(AEMO_TIME_ZONE);
 
