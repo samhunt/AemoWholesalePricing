@@ -16,8 +16,7 @@
     @if (ValidRegion)
     {
         <div class="prices">
-            <h1>@kWhDollarString kWh</h1>
-            <h1>@MWhDollarString MWh</h1>
+            <h1>Current Price @kWhDollarString kWh (@MWhDollarString MWh)</h1>
         </div>
 
         <WholesaleForecast Region="@Region" @ref="_wholesaleForecast"/>

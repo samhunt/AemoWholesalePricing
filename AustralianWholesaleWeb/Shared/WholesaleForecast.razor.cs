@@ -94,9 +94,30 @@ namespace AustralianWholesaleWeb.Shared
             data.RemoveAll(x => x.DateTime <= NemService.AEMO_TIME().AddHours(-6)
                                 || x.DateTime >= NemService.AEMO_TIME().AddHours(16));
             RemoveData();
-            _config.Data.Datasets.Add(new LineDataset<TimePoint>(data.Select(x => new TimePoint(x.DateTime, (double)x.kWhPrice)).ToList()) { Label = "$/kWh", BorderColor = "white", YAxisId = YAxis_DollarkWh });
-            _config.Data.Datasets.Add(new LineDataset<TimePoint>(data.Select(x => new TimePoint(x.DateTime, (double)x.GenerationMWh)).ToList()) { Label = "Generation MWh", BorderColor = "green", YAxisId = YAxis_MWh });
-            _config.Data.Datasets.Add(new LineDataset<TimePoint>(data.Select(x => new TimePoint(x.DateTime, (double)x.DemandMWh)).ToList()) { Label = "Demand MWh", BorderColor = "blue", YAxisId = YAxis_MWh });
+            _config.Data.Datasets.Add(new LineDataset<TimePoint>(data.Select(x => new TimePoint(x.DateTime, (double)x.kWhPrice)).ToList()) { 
+                Label = "$/kWh", 
+                BorderColor = "white", 
+                YAxisId = YAxis_DollarkWh,
+                PointRadius = 0,
+                PointHoverRadius = 10,
+                PointHitRadius = 10,
+            });
+            _config.Data.Datasets.Add(new LineDataset<TimePoint>(data.Select(x => new TimePoint(x.DateTime, (double)x.GenerationMWh)).ToList()) { 
+                Label = "Generation MWh", 
+                BorderColor = "green", 
+                YAxisId = YAxis_MWh,
+                PointRadius = 0,
+                PointHoverRadius = 10,
+                PointHitRadius = 10,
+            });
+            _config.Data.Datasets.Add(new LineDataset<TimePoint>(data.Select(x => new TimePoint(x.DateTime, (double)x.DemandMWh)).ToList()) { 
+                Label = "Demand MWh", 
+                BorderColor = "blue", 
+                YAxisId = YAxis_MWh, 
+                PointRadius = 0,
+                PointHoverRadius = 10,
+                PointHitRadius = 10,
+            });
 
             await _chart.Update();
             StateHasChanged();
