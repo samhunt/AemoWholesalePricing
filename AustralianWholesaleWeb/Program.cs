@@ -5,8 +5,10 @@ using Microsoft.Extensions.Logging;
 using Nem;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AustralianWholesaleWeb
@@ -15,6 +17,10 @@ namespace AustralianWholesaleWeb
     {
         public static async Task Main(string[] args)
         {
+            CultureInfo ci = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
