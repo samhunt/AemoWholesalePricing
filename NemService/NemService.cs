@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Runtime.InteropServices;
+using TimeZoneConverter;
 
 namespace Nem
 {
     public class NemService : INemService
     {
-        public static string AEMO_ZONE_WINDOWS = "E.Australia Standard Time";
-        public static string AEMO_ZONE_LINUX = "Australia/Melbourne";
+        public static string AEMO_TIME_ZONE = "Australia/Melbourne";
 
         private HttpClient _http;
         public NemService()
@@ -24,9 +22,9 @@ namespace Nem
 
         public DateTime AEMOTime()
         {
-            var zoneId = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? AEMO_ZONE_WINDOWS : AEMO_ZONE_LINUX;
+            var timeZoneInfo = TZConvert.GetTimeZoneInfo(AEMO_TIME_ZONE);
 
-            return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(zoneId));
+            return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
         }
 
         public NemPrice CurrentPrice(NemRegionId regionId)
