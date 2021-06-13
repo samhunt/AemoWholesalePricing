@@ -1,7 +1,8 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=B612&display=swap');
 
 html, body, #app, .content, .page, .main {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'B612', sans-serif;
     height: 100%;
     margin: 0;
 }
@@ -53,9 +54,9 @@ a, .btn-link {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}

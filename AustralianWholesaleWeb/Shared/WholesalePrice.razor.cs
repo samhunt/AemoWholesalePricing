@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static AustralianWholesaleLib.Models.Price;
 
 namespace AustralianWholesaleWeb.Shared
 {
@@ -31,7 +32,7 @@ namespace AustralianWholesaleWeb.Shared
         private string kWhDollarString => $"{kWhPrice:c}";
         private string MWhDollarString => $"{MWhPrice:c}";
 
-        private string myStyle = "";
+        private PriceState priceState = PriceState.OK;
 
         public WholesalePrice()
         {
@@ -50,15 +51,22 @@ namespace AustralianWholesaleWeb.Shared
                 var prices = await Lib.CurrentPrice(RegionId);
                 kWhPrice = prices.kWh;
                 MWhPrice = prices.MWh;
+                priceState = prices.State();
+            }
 
-                myStyle = $"background-color: {prices.Colour()};height: 100%;";
-            }
-            else
-            {
-                myStyle = $"height: 100%;";
-            }
             StateHasChanged();
         }
+
+
+        private string BackgroundGradient => priceState switch
+        {
+            PriceState.OK => "linear-gradient(to top, #0ba360 0%, #3cba92 100%)",
+            PriceState.VeryHigh => "linear-gradient(-60deg, #ff5858 0%, #f09819 100%)",
+            PriceState.High => "linear-gradient(120deg, #f6d365 0%, #fda085 100%)",
+            PriceState.VeryLow => "linear-gradient(to top, #00c6fb 0%, #005bea 100%)",
+            PriceState.Low => "linear-gradient(to top, #00c6fb 0%, #005bea 100%)",
+            _ => ""
+        };
 
         private List<Regions> Regions()
         {

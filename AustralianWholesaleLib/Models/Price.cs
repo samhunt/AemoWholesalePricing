@@ -12,28 +12,32 @@ namespace AustralianWholesaleLib.Models
         public decimal MWh { get; set; }
         public decimal kWh { get; set; }
 
-        public string Colour()
+        public PriceState State()
         {
             if(MWh <= 0)
             {
-                return _blue;
+                return PriceState.Low;
             }
             if(MWh > 0 && MWh < 20)
             {
-                return _green;
+                return PriceState.OK;
             }
             if (MWh >= 20 && MWh < 100)
             {
-                return _orange;
+                return PriceState.High;
             }
 
 
-            return _red;
+            return PriceState.VeryHigh;
         }
 
-        private string _red = "#d9534f";
-        private string _orange = "#f0ad4e";
-        private string _green = "#5cb85c";
-        private string _blue = "#5bc0de";
+        public enum PriceState
+        {
+            VeryHigh,
+            High,
+            OK,
+            Low,
+            VeryLow
+        }
     }
 }

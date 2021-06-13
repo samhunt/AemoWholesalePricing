@@ -1,6 +1,6 @@
 ﻿@using Nem
 
-<div style=@myStyle>
+<div class="NemPrice">
 
 
     <select class="form-control selectpicker" @bind="Region">
@@ -15,9 +15,24 @@
 
     @if (ValidRegion)
     {
-    <div>
+    <div class="prices">
         <h1>@kWhDollarString kWh</h1>
         <h1>@MWhDollarString MWh</h1>
     </div>
+
+
     }
 </div>
+
+
+<style>
+    body 
+    {
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-image: @BackgroundGradient;
+        overflow: hidden;
+    }
+</style>
